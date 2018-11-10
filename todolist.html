@@ -146,14 +146,14 @@ input {
         <div class="col-12">
           <input id="userinput" type="text"
           placeholder="new item" maxlength: "27">
-          <button id "enter"><i class="fas fa-pencil-alt">
+          <button id="enter">SUBMIT
           </li></button>
         </div>
       </div>
 
 
       <div class="row">
-        <div class="listitems col-12"
+        <div class="listitems col-12">
         <ul class="col-12 offset-0 col-sm-8 offset-nm-2">
 
         </ul>
@@ -161,22 +161,77 @@ input {
       </div>
     </div>
 
-    <script type="text/javascript">
-    src="script_method3.js" </script>
 
 
 
 
-
-<script>
+<script type="text/javascript">
 var enterbutton = document.getElementById("enter");
 var input = document.getElementById("userinput");
 var ul = document.querySelector("ul");
-var item = document.getElementByTagName("li");
+var item = document.getElementsByTagName("li");
 
-function inputlength() 
+function inputlength() {
+  return input.value.length;
+}
 
+function listlength(){
+  return item.length;
+}
 
+function createlistelement (){
+  var li = document.createElement("li");
+  // creates an element "li"
+
+li.appendChild(document.createTextNode(input.value));
+//makes text from input field the li tex
+
+ul.appendChild(li); //adds li to ul
+
+input.value = ""; //reset text input field
+
+//START STRIKETHROUGH
+// because it's only adds it for new items
+
+function crossOut(){
+  li.classlist.toggle("done");
+}
+
+li.addEventListener("click",crossOut);
+//END STRIKETHROUGH
+
+// START ADD DELETE BUTTON
+var dBtn = document.createElement("button");
+dBtn.appendChild(document.createTextNode("X"));
+li.appendChild (dBtn);
+dBtn.addEventListener("click", deletelistitem);
+//end add delete BUTTON
+
+//ADD CLASS DELETE (DISPLAY : NONE)
+}
+
+function deletelistitem(){
+  li.classList.add("delete");
+}
+
+function addlistafterclick(){
+  if (inputlength()>0){
+    //makes sure that an empty input field doesnt create a li
+    createlistelement();
+  }
+}
+
+function addlistAfterKeypress(event) {
+  if(inputlength() > 0 && event.which === 13){
+    //this now looks to see if you hit "enter"/"return"
+		//the 13 is the enter key's keycode, this could also be display by event.keyCode === 1
+    createlistelement();
+  }
+}
+
+enterbutton.addEventListener("click",addlistafterclick);
+
+input.addEventListener("keypress",addlistAfterKeypress);
 
 </script>
 
